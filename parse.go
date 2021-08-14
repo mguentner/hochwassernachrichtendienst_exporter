@@ -78,6 +78,14 @@ func (a *WaterLevelInformation) IsEqual(b *WaterLevelInformation) (bool, []error
 	return len(errs) == 0, errs
 }
 
+func PositiveCentimeterToMillimeter(centimeter float64) float64 {
+	if centimeter < 0 { // -1 should remain -1
+		return centimeter
+	} else {
+		return centimeter*10
+	}
+}
+
 func (wl *WaterLevelInformation) AddMetricsToRegistry(registry *prometheus.Registry) error {
 	addAndSetGauge := func(name string, help string, value float64) error {
 		g := prometheus.NewGauge(prometheus.GaugeOpts{
@@ -96,7 +104,7 @@ func (wl *WaterLevelInformation) AddMetricsToRegistry(registry *prometheus.Regis
 		g.Set(value)
 		return nil
 	}
-	err := addAndSetGauge("last_level_millimeters", "last level in millimeters", wl.LastLevelCentimeter*10)
+	err := addAndSetGauge("last_level_millimeters", "last level in millimeters", PositiveCentimeterToMillimeter(wl.LastLevelCentimeter))
 	if err != nil {
 		return err
 	}
@@ -108,23 +116,23 @@ func (wl *WaterLevelInformation) AddMetricsToRegistry(registry *prometheus.Regis
 	if err != nil {
 		return err
 	}
-	err = addAndSetGauge("warning_level_1_millimeters", "warning level 1 in millimeters, -1 if not present", float64(wl.WarningLevel1Centimeter*10))
+	err = addAndSetGauge("warning_level_1_millimeters", "warning level 1 in millimeters, -1 if not present", PositiveCentimeterToMillimeter(wl.WarningLevel1Centimeter))
 	if err != nil {
 		return err
 	}
-	err = addAndSetGauge("warning_level_2_millimeters", "warning level 2 in millimeters, -1 if not present", float64(wl.WarningLevel2Centimeter*10))
+	err = addAndSetGauge("warning_level_2_millimeters", "warning level 2 in millimeters, -1 if not present", PositiveCentimeterToMillimeter(wl.WarningLevel2Centimeter))
 	if err != nil {
 		return err
 	}
-	err = addAndSetGauge("warning_level_3_millimeters", "warning level 3 in millimeters, -1 if not present", float64(wl.WarningLevel3Centimeter*10))
+	err = addAndSetGauge("warning_level_3_millimeters", "warning level 3 in millimeters, -1 if not present", PositiveCentimeterToMillimeter(wl.WarningLevel3Centimeter))
 	if err != nil {
 		return err
 	}
-	err = addAndSetGauge("warning_level_4_millimeters", "warning level 4 in millimeters, -1 if not present", float64(wl.WarningLevel4Centimeter*10))
+	err = addAndSetGauge("warning_level_4_millimeters", "warning level 4 in millimeters, -1 if not present", PositiveCentimeterToMillimeter(wl.WarningLevel4Centimeter))
 	if err != nil {
 		return err
 	}
-	err = addAndSetGauge("hundered_year_flood_level_millimeters", "an event that reaches or surpasses that level with a probability of 1% per year, -1 if not present", float64(wl.HundredYearFloodLevelCentimeter*10))
+	err = addAndSetGauge("hundered_year_flood_level_millimeters", "an event that reaches or surpasses that level with a probability of 1% per year, -1 if not present", PositiveCentimeterToMillimeter(wl.HundredYearFloodLevelCentimeter))
 	if err != nil {
 		return err
 	}

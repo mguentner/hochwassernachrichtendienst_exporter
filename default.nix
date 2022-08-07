@@ -6,7 +6,7 @@ buildGoModule rec {
   src = ./.;
 
   vendorSha256 = "sha256:0x81qssskbvby9ws26mpx028dd9zrmrzz6zxn732kmlg399rb8h0";
-  runVend = true;
+  proxyVendor = true;
 
   meta = with lib; {
     description = "an unofficial prometheus exporter for the Hochwassernachrichtendienst Bayern";

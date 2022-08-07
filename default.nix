@@ -5,7 +5,7 @@ buildGoModule rec {
 
   src = ./.;
 
-  vendorSha256 = "sha256:0x81qssskbvby9ws26mpx028dd9zrmrzz6zxn732kmlg399rb8h0";
+  vendorSha256 = "sha256-MlBoieRcJ6ggiz7NJ5DedIsWOVwG7T1GptNh43aQ01I";
   proxyVendor = true;
 
   meta = with lib; {
